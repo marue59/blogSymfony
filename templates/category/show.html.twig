@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}<h1>Liste des catégories</h1>{% endblock %}
+
+{% block body %}
+<div class="container bg-light mt-5">
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr class="text-center">
+                <th>#</th>
+                <th>Catégorie</th>
+                <th>Nom du projet</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for posts in categories %}
+                <tr> 
+                    <th scope="row">{{ loop.index }}</th>
+                    <th>{{ category.name }}</th>
+                    <th><a href="{{ path('post_show', {'slug': posts.slug}) }}" class="m-2">{{ posts.name }}</a></th>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+        
+{% endblock %}

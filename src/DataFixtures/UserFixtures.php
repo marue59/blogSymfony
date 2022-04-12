@@ -28,7 +28,8 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setEmail("user$i@email.com");
             $user->setPassword($this->encoder->hashPassword($user, 'password'));
-
+            $user->addRole('ROLE_USER');
+            
             if ($i == 0) {
                 $user->addRole('ROLE_ADMIN');
             }

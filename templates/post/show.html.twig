@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="card">
+            <h5 class="card-title">{{post.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{post.category.name}}</h6>
+            <p class="card-text">{{post.text}}</p>
+            <a class="card-text" href="{{post.lien}}">Voir le code</a>
+            <div class="card-body">
+                {{post.createdAt ? post.createdAt|date('d-m-Y H:i') : ''}}
+            </div>
+            {% if post.pictures is not empty %}
+            <div class="medias {{ loop.index > 0 ? 'd-none' : null}}" style="flex: 1 1 160px;"> 
+                <img src="/images/picture_upload/{{ picture.path }}" width="200px" height="150px" class="">
+            </div> 
+            {% else %}
+                <img src="https://via.placeholder.com/100x50">
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -18,12 +18,19 @@ class Category
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
+
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Post::class)]
     private $posts;
+
+    #[ORM\ManyToMany(targetEntity: VeilleTechno::class, mappedBy: 'category')]
+    private $veilleTechnos;
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->veilleTechnos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,6 +50,17 @@ class Category
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
     /**
      * @return Collection<int, Post>
      */
@@ -68,6 +86,33 @@ class Category
             if ($post->getCategory() === $this) {
                 $post->setCategory(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VeilleTechno>
+     */
+    public function getVeilleTechnos(): Collection
+    {
+        return $this->veilleTechnos;
+    }
+
+    public function addVeilleTechno(VeilleTechno $veilleTechno): self
+    {
+        if (!$this->veilleTechnos->contains($veilleTechno)) {
+            $this->veilleTechnos[] = $veilleTechno;
+            $veilleTechno->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVeilleTechno(VeilleTechno $veilleTechno): self
+    {
+        if ($this->veilleTechnos->removeElement($veilleTechno)) {
+            $veilleTechno->removeCategory($this);
         }
 
         return $this;

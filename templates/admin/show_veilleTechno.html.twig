@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+   
+    <div class="container bg-light">
+        <div class="card text-secondary">
+            <h5 class="card-title">{{veilleTechno.name}}</h5>
+            {% for category in veilleTechno %}
+                <h6 class="card-subtitle mb-2 text-muted">{{veilleTechno.category}}</h6>
+            {% endfor %}
+            <p class="card-text">{{veilleTechno.author}}</p>
+            <p class="card-text">{{veilleTechno.lien}}</p>
+        </div>
+    </div>
+
+{% endblock %}

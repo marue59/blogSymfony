@@ -22,6 +22,10 @@ class Picture
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'pictures')]
     private $post;
 
+    #[ORM\ManyToOne(targetEntity: VeilleTechno::class, inversedBy: 'picture')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $veilleTechno;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,18 @@ class Picture
     public function setPost(?Post $post): self
     {
         $this->post = $post;
+
+        return $this;
+    }
+
+    public function getVeilleTechno(): ?VeilleTechno
+    {
+        return $this->veilleTechno;
+    }
+
+    public function setVeilleTechno(?VeilleTechno $veilleTechno): self
+    {
+        $this->veilleTechno = $veilleTechno;
 
         return $this;
     }

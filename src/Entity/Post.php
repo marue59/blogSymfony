@@ -33,9 +33,6 @@ class Post
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'posts')]
     private $category;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
-    private $comments;
-
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Picture::class)]
     private $pictures;
 
@@ -44,7 +41,6 @@ class Post
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
         $this->pictures = new ArrayCollection();
     }
 
@@ -121,36 +117,6 @@ class Post
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Comment>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setPost($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getPost() === $this) {
-                $comment->setPost(null);
-            }
-        }
 
         return $this;
     }

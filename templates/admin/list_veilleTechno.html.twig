@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+    {% for veilleTechno in veilleTechnos %} 
+    <ul class="nav bg-light">
+        <li class="nav-item ">
+            <a class="nav-link" href="{{ path('admin_list_veilleTechno_slug', { 'slug' : veilleTechno.slug })}}">{{ veilleTechno.name }}</a>
+        </li>
+    </ul>
+    {% endfor %}    
+{% endblock %}

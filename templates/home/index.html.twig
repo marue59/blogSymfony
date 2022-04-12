@@ -3,13 +3,48 @@
 {% block title %}Home page{% endblock %}
 
 {% block body %}
-<div class="bg_home d-flex flex-column justify-content-center">
-    <div class="d-flex flex-column text-center text-white pt-2">
-        <h1 class="pt-5">Marie Defretin</h1>
-        <h3 class="p-5">Passionnée par le monde du numérique</h3>
+{% for flash_message in app.session.flashBag.get('success') %}
+    <div class="alert alert-success" role="alert">
+        <strong>Superbe !</strong> {{ flash_message }}
     </div>
-</div> 
+{% endfor %}
+<div class="container">
+    <div class="d-flex flex-row justify-content-center m-3 bg-light">
+        <div class="col-6 col-md-8 pt-5">
+            <h1 class="mt-4 fst-italic text-center">Marie Defretin </h1>
+            <p class="mt-4 text-center">Developpeur d'application Back-end</p>
+            <p class="mt-4 text-center m-3"><a href="{{ path('post_index') }}" class="text-dark fw-bold">Voir les projets...</a></p> 
+        </div>
+        <div class="col-6 col-md-4">
+            <img src="{{ asset('images/ordi.jpg') }}" width="500px" height="600px" alt="">
+        </div>  
+    </div>
+    
+    <div class="d-flex flex-wrap justify-content-between list-result mt-5">
+        {% for post in posts %} 
+            <div class="{{ loop.index > 10 ? 'd-none' : null}}" style="flex: 1 1 160px;">
+                <div class="d-flex flex-column">
+                    <div class="card mx-auto">
+                        {% if post.pictures is not empty %}
+                        <img src="/images/picture_upload/{{ post.pictures.first.path }}" width="250px" height="150px" class="">
+                        {% else %}
+                        <img src="https://via.placeholder.com/250x150">
+                        {% endif %}
+                    </div>
+                    <div class="d-flex flex-row justify-content-center">
+                        <a href="{{ path('post_show', {'slug': post.slug}) }}" class="m-2">{{ post.name }}</a>
+                    </div>
+                    <div class="d-flex flex-row justify-content-center">
+                        <a href="{{ path('category_show', {'slug': post.category.slug}) }}">{{ post.category.name }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}  
+
+<script type="application/javascript" src="{{ asset('js/app.js') }}"></script>
 {% endblock %}
